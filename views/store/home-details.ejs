@@ -1,0 +1,35 @@
+<%- include('../partials/head') %>
+<script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+</head>
+<body class="bg-gray-100 font-sans">
+
+<%- include('../partials/nav') %>
+
+
+
+<main class="container mx-auto px-6 py-12">
+    <div class="max-w-lg mx-auto bg-white p-8 rounded-lg shadow-lg">
+        <h2 class="text-2xl font-bold text-gray-900 mb-6 text-center"><%= home.houseName %></h2>
+        <img src="<%= home.photoUrl %>" alt="<%= home.houseName %>" class="w-full h-48 object-cover rounded-lg mb-6" />
+        
+        <div class="space-y-4">
+            <p class="text-gray-600">📍 <%= home.location %></p>
+            <p class="text-lg text-gray-800">Price: ₹ <%= home.price %> / night</p>
+            <p class="text-lg text-yellow-500">Rating: <%= home.rating %> ⭐</p>
+        </div>
+
+        <!-- Add to Favorites Button -->
+        <%- include('../partials/favourite') %>
+
+
+        <!-- Book Now Button -->
+        <form action="/bookings/checkout/<%= home._id %>" method="GET">
+            <button type="submit" class="w-full bg-red-500 text-white py-2 rounded-md hover:bg-red-600 transition duration-300 mt-4">
+                Book Now
+            </button>
+        </form>
+    </div>
+</main>
+
+</body>
+</html>

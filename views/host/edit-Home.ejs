@@ -1,0 +1,125 @@
+<%- include('../partials/head')%>
+
+<script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+  </head>
+  <body class="bg-gray-100 font-sans">
+
+    <%- include('../partials/nav') %>
+
+
+    <!-- Main Content -->
+    <main class="container mx-auto px-6 py-12">
+      <div class="max-w-lg mx-auto bg-white p-8 rounded-lg shadow-lg">
+        <h2 class="text-2xl font-bold text-gray-900 mb-6 text-center"><%= editing ? "Edit" : "Register" %> your home</h2>
+
+        <form action="/host/<%= editing ?"edit-home" : "add-home" %>" method="POST" class="space-y-6">
+          <!-- House Name Input -->
+
+          <input type="hidden" value="<%= editing ? home._id : ''%>" name="id" />
+
+          <div>
+            <label for="houseName" class="block text-lg font-medium text-gray-700">House Name</label>
+            <input
+              type="text"
+              name="houseName"
+              value="<%= editing ? home.houseName : ''%>"
+              id="houseName"
+              placeholder="Enter the name of your house"
+              class="mt-2 w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent"
+              required
+            />
+          </div>
+
+          <!-- Price Per Night Input -->
+          <div>
+            <label for="price" class="block text-lg font-medium text-gray-700">
+              Price per Night
+            </label>
+            <input
+              type="number"
+              name="price"
+              value="<%= editing ? home.price : ''%>"
+              id="price"
+              placeholder="Enter price per night"
+              class="mt-2 w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent"
+              required
+            />
+          </div>
+
+          <!-- Location Input -->
+          <div>
+            <label for="location" class="block text-lg font-medium text-gray-700">
+              Location
+            </label>
+            <input
+              type="text"
+              name="location"
+              value="<%= editing ? home.location : ''%>"
+              id="location"
+              placeholder="Enter house location"
+              class="mt-2 w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent"
+              required
+            />
+          </div>
+
+          <!-- Rating Input -->
+          <div>
+            <label for="rating" class="block text-lg font-medium text-gray-700">
+              Rating
+            </label>
+            <input
+              type="number"
+              name="rating"
+              value="<%= editing ? home.rating : ''%>"
+              id="rating"
+              placeholder="Rating (e.g. 4.5)"
+              step="0.1"
+              min="0"
+              max="5"
+              class="mt-2 w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent"
+              required
+            />
+          </div>
+
+          <!-- Photo URL Input -->
+          <div>
+            <label for="photoUrl" class="block text-lg font-medium text-gray-700">
+              Photo URL
+            </label>
+            <input
+              type="url"
+              name="photoUrl"
+              value="<%= editing ? home.photoUrl : ''%>"
+              id="photoUrl"
+              placeholder="Paste image link here"
+              class="mt-2 w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent"
+              required
+            />
+          </div>
+
+          <div>
+            <label for="description" class="block text-lg font-medium text-gray-700">House description</label>
+            <textarea
+              name="description"
+              id="description"
+              placeholder="Enter the description of your house"
+              class="mt-2 w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent"
+              required><%= editing ? home.description : ''%></textarea>
+          </div>
+
+
+          <!-- Submit Button -->
+          <div>
+            <button
+              type="submit"
+              class="w-full bg-red-500 text-white py-2 rounded-md hover:bg-red-600 transition duration-300"
+            >
+              <%= editing ? "Update Home" : "Add Home" %>
+            </button>
+          </div>
+        </form>
+      </div>
+    </main>
+
+  </body>
+</html>

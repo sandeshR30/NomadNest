@@ -1,0 +1,80 @@
+<%- include('../partials/head') %>
+<script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+</head>
+<body class="bg-gray-100 font-sans text-gray-800">
+
+<%- include('../partials/nav') %>
+
+<main class="container mx-auto px-6 py-12">
+    <h2 class="text-4xl font-bold text-center text-gray-900 mb-6">
+        Welcome to <span class="text-red-500">Airbnb</span>
+    </h2>
+    
+    <!-- Image section (optional for decoration) -->
+    <div class="flex justify-center mb-12">
+        <img src="https://via.placeholder.com/800x400" alt="Airbnb" class="rounded-lg shadow-lg">
+    </div>
+
+    <!-- Description -->
+    <p class="text-lg text-center text-gray-600">
+        Discover beautiful homes and experiences hosted by wonderful people all over the world.
+        Here are your registered homes:
+    </p>
+
+    <ul class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        <% registeredHomes.forEach(home => { %>
+            <li class="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-lg transition duration-300">
+                <!-- Wrap the card content in a div instead of <a> to allow separate button -->
+                <div class="cursor-pointer">
+                    <!-- House Image -->
+                    <img
+                        src="<%= home.photoUrl %>"
+                        alt="<%= home.houseName %>"
+                        class="w-full h-48 object-cover"
+                        onclick="window.location.href='/home/<%= home._id %>'"
+                    />
+
+                    <!-- Card Content -->
+                    <div class="p-4 space-y-2">
+                        <!-- House Name -->
+                        <h2 class="text-xl font-semibold text-gray-800">
+                            <%= home.houseName %>
+                        </h2>
+
+                        <!-- Location -->
+                        <p class="text-gray-600">
+                            📍 <%= home.location %>
+                        </p>
+
+                        <!-- Price & Rating -->
+                        <div class="flex justify-between items-center pt-2">
+                            <span class="text-lg font-bold text-red-600">
+                                ₹ <%= home.price %> / night
+                            </span>
+
+                            <span class="flex items-center text-yellow-500 font-medium">
+                                ⭐ <%= home.rating %>
+                            </span>
+                        </div>
+
+                        <!-- Book Button -->
+                        <div class="pt-4">
+                            <%- include('../partials/favourite', {home: home}) %>
+                        </div>
+                    </div>
+                </div>
+            </li>
+        <% }); %>
+    </ul>
+
+</main>
+
+<!-- Footer (optional) -->
+<footer class="bg-white py-8 mt-12 shadow-inner">
+    <div class="container mx-auto text-center text-gray-600">
+        <p>&copy; 2025 Airbnb, Inc. All rights reserved.</p>
+    </div>
+</footer>
+
+</body>
+</html>
