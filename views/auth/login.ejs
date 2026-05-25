@@ -6,6 +6,7 @@
 <body class="bg-gray-100 font-sans">
 
   <%- include('../partials/nav') %>
+  <%- include('../partials/errors') %>
 
   <!-- Main Content -->  
   <main class="container mx-auto px-6 py-12">
@@ -26,6 +27,7 @@
             type="email"
             name="email"
             id="email"
+            value="<%= typeof oldInput !== 'undefined' ? oldInput.email : '' %>"
             placeholder="Enter your email"
             class="mt-2 w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent"
             required
