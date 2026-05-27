@@ -1,5 +1,6 @@
-const Favourites = require('../model/favourite');
+//const Favourites = require('../model/favourite');
 const Home = require('../model/store');
+const User = require('../model/user')
 
 exports.getIndex = (req, res , next)=>{
   //console.log(req.url , req.method);
@@ -51,8 +52,19 @@ exports.getBookings = (req ,res , next) =>{
     Home.find((registeredHomes)=> res.render('store/bookings', { bookings : registeredHomes , pageTitle: 'Bookings page' , currentPage: 'bookings',isLoggedIn: req.isLoggedIn ,user: req.session.user}));
 }
 
-exports.getFavouriteList = (req, res, next) => {
-  Favourites.find()
+exports.getFavouriteList = async (req, res, next) => {
+
+  const userId = req.session.user._id;
+  const user = await User.findById(userId).populate('favourite')
+
+    res.render("store/favourites", {
+    favouritesHomes: user.favourite,
+    pageTitle: "My Favourites",
+    currentPage: "favourites",
+    isLoggedIn: req.isLoggedIn, 
+    user: req.session.user,
+    });
+  /* Favourites.find()
   .populate('houseId')
   .then((favourites) => {
     const favouriteHomes = favourites.map((fav) => fav.houseId);
@@ -63,12 +75,22 @@ exports.getFavouriteList = (req, res, next) => {
       isLoggedIn: req.isLoggedIn,
       user: req.session.user
     });
-  });
+  }); */
 };
 
-exports.postAddToFavourite = (req, res, next) => {
+exports.postAddToFavourite = async(req, res, next) => {
   const homeId = req.body.id;
-  Favourites.findOne({houseId: homeId}).then((fav) => {
+  const userId = req.session.user._id;
+  const user = await User.findById(userId);
+
+  if(!user.favourite.includes(homeId)){
+    user.favourite.push(homeId);
+    await user.save();
+  }
+
+ res.redirect("/favourites");
+
+  /*Favourites.findOne({houseId: homeId}).then((fav) => {
     if (fav) {
       console.log("Already marked as favourite");
     } else {
@@ -80,15 +102,22 @@ exports.postAddToFavourite = (req, res, next) => {
     res.redirect("/favourites");
   }).catch(err => {
     console.log("Error while marking favourite: ", err);
-  });
+  }); */
 };
 
-exports.postRemovefromFavourite = (req ,res , next) =>{
+exports.postRemovefromFavourite = async (req ,res , next) =>{
   const homeId = req.params.homeId;
   console.log(homeId);
+  const userId = req.session.user._id;
+  const user = await User.findById(userId);
 
-  Favourites.findOneAndDelete(homeId).then(()=>{
+  if(user.favourite.includes(homeId)){
+    user.favourite = user.favourite.filter(fav=> fav != homeId);
+    await user.save();
+  }
+
+  /* Favourites.findOneAndDelete(homeId).then(()=>{
     res.redirect("/favourites");
 
-  })
+  }) */
 }

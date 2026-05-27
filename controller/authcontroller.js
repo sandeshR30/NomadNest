@@ -3,24 +3,6 @@ const User = require("../model/user")
 const bcrypt = require("bcryptjs");
 
 exports.getLogin = (req , res ,next) =>{
-<<<<<<< HEAD
-  res.render("auth/login", 
-    {
-      pageTitle: 'Login' ,
-      currentPage: 'login' , 
-      isLoggedIn: false,
-      errors: [],
-      oldInput:{}
-    })
-}
-
-exports.postLogin = async (req , res , next) =>{
-
-  const {email , password} = req.body;
-  const user = await User.findOne({email})
-
-  if(!user){
-=======
   res.render("auth/login", {pageTitle: 'Login' , currentPage: 'login' , isLoggedIn: false, user: {}})
 }
 
@@ -28,41 +10,15 @@ exports.postLogin = async (req , res , next) =>{
   const {email, password} = req.body;
   const user = await User.findOne({email});
   if (!user) {
->>>>>>> 954c0d6 (added the host and user functionality)
     return res.status(422).render("auth/login", {
       pageTitle: "Login",
       currentPage: "login",
       isLoggedIn: false,
-<<<<<<< HEAD
-      errors: ["User doesnt exist"],
-      oldInput:{email}
-    });
-  }
-
-  const isMatch = await bcrypt.compare(password, user.password);
-  if(!isMatch){
-    return res.status(422).render("auth/login", {
-      pageTitle: "Login",
-      currentPage: "login",
-      isLoggedIn: false,
-      errors: ["Invalid Password"],
-      oldInput:{email}
-    });
-  }
-
-  console.log(req.body);
-  req.session.isLoggedIn = true;
-  req.session.user= user;
-  await req.session.save();
-  //res.cookie("isLoggedIn" , true);
-  res.redirect("/");
-=======
       errors: ["User does not exist"],
       oldInput: {email},
       user: {},
     });
   }
->>>>>>> 954c0d6 (added the host and user functionality)
 
   const isMatch = await bcrypt.compare(password, user.password);
   if (!isMatch) {
@@ -178,27 +134,10 @@ exports.postsignup = [
     })
   }
 
-<<<<<<< HEAD
-
-  bcrypt.hash(password , 12).then(hashedPassword=>{
-    const user = new User({firstName , lastName , email , password: hashedPassword , role})
-    return user.save();
-  }).then(()=>{
-    res.redirect("/login");
-  }).catch(err => {
-    console.log("error while saving user: ", err);
-    return res.status(422).render("auth/signup",{
-      pageTitle: 'signup',
-      currentPage: 'signup',
-      isLoggedIn: false,
-      errors: [err.message],
-      oldInput: {firstName , lastName , email , password , role}
-=======
     bcrypt.hash(password, 12)
     .then(hashedPassword => {
       const user = new User({firstName, lastName, email, password: hashedPassword, userType});
       return user.save();
->>>>>>> 954c0d6 (added the host and user functionality)
     })
     .then(() => {
       res.redirect("/login");
