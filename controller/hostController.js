@@ -3,7 +3,7 @@ const { error } = require('./error');
 
 exports.getAddHome = (req, res , next)=>{
   //console.log(req.url , req.method);
-  res.render( 'host/edit-Home' ,  {pageTitle: 'Add Home to Airbnb' ,  currentPage: 'AddHome' , editing: false , isLoggedIn: req.isLoggedIn});
+  res.render( 'host/edit-Home' ,  {pageTitle: 'Add Home to Airbnb' ,  currentPage: 'AddHome' , editing: false , isLoggedIn: req.isLoggedIn , user: req.session.user});
 
 }
 
@@ -19,17 +19,17 @@ exports.postAddHome = (req, res , next)=>{
 
  // registeredHomes.push({houseName: req.body.houseName , pricePerNight: req.body.pricePerNight ,location: req.body.location, rating: req.body.rating, photoUrl: req.body.photoUrl});
 
-  res.render('host/home-added',  {pageTitle: 'Home Added Successfully', currentPage: 'AddHome complete',isLoggedIn: req.isLoggedIn});
+  res.render('host/home-added',  {pageTitle: 'Home Added Successfully', currentPage: 'AddHome complete',isLoggedIn: req.isLoggedIn ,user: req.session.user});
 }
 
 
 exports.getHomeDetails = (req ,res , next) =>{
-   Home.find().then((registeredHomes)=> res.render('store/home-details', { home : registeredHomes , pageTitle: 'Home page' , currentPage: 'Home'}));
+   Home.find().then((registeredHomes)=> res.render('store/home-details', { home : registeredHomes , pageTitle: 'Home page' , currentPage: 'Home' ,user: req.session.user}));
 }
 
 exports.getHostHomes = (req, res , next)=>{
   //console.log(req.url , req.method);
- Home.find().then((registeredHomes)=> res.render('host/host-home-list', {registeredHomes: registeredHomes , pageTitle: 'host-Home list' , currentPage: 'host-homes', isLoggedIn: req.isLoggedIn}));
+ Home.find().then((registeredHomes)=> res.render('host/host-home-list', {registeredHomes: registeredHomes , pageTitle: 'host-Home list' , currentPage: 'host-homes', isLoggedIn: req.isLoggedIn ,user: req.session.user}));
   //console.log(registeredHomes);
  
 }
@@ -49,7 +49,7 @@ exports.getEditHome = (req, res , next)=>{
       return res.redirect('/host/host-home-list');
     }     
     console.log(homeId, editing , home);
-    res.render( 'host/edit-Home' ,  {pageTitle: 'Edit Home' ,  currentPage: 'host-home' ,editing: editing , home: home ,isLoggedIn: req.isLoggedIn});
+    res.render( 'host/edit-Home' ,  {pageTitle: 'Edit Home' ,  currentPage: 'host-home' ,editing: editing , home: home ,isLoggedIn: req.isLoggedIn, user: req.session.user});
   });
 }
 

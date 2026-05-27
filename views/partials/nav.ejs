@@ -11,6 +11,7 @@
       </li>
 
       <% if(isLoggedIn) { %>
+        <% if(user && user.userType === 'user') { %>
       <li>
         <a
           href="/homes"
@@ -35,6 +36,9 @@
           Bookings
         </a>
       </li>
+
+      <% } else { %>
+
       <li>
         <a
           href="/host/host-home-list"
@@ -51,7 +55,7 @@
           Add Home
         </a>
       </li>
-
+      <% } %>
       <!-- Logout Button -->
       <li>
         <form action="/logout" method="POST">

@@ -6,7 +6,7 @@ exports.getIndex = (req, res , next)=>{
   console.log("Session Value:", req.session);
 
   Home.find().then(registeredHomes=>{
-    res.render('store/index', {registeredHomes: registeredHomes , pageTitle: 'index page' , currentPage: 'index', isLoggedIn: req.isLoggedIn})
+    res.render('store/index', {registeredHomes: registeredHomes , pageTitle: 'index page' , currentPage: 'index', isLoggedIn: req.isLoggedIn, user: req.session.user})
   });
 
   /* Home.find((registeredHomes)=> res.render('store/index', {registeredHomes: registeredHomes , pageTitle: 'index page' , currentPage: 'index'})); */
@@ -18,7 +18,7 @@ exports.getHomes = (req, res , next)=>{
   //console.log(req.url , req.method);
 
   Home.find().then(registeredHomes=>{
-    res.render('store/home-list', {registeredHomes: registeredHomes , pageTitle: 'Home list' , currentPage: 'home' ,isLoggedIn: req.isLoggedIn})
+    res.render('store/home-list', {registeredHomes: registeredHomes , pageTitle: 'Home list' , currentPage: 'home' ,isLoggedIn: req.isLoggedIn ,user: req.session.user})
   });
 
 
@@ -40,7 +40,7 @@ exports.getHomeDetails = (req ,res , next) =>{
         console.log("home not found");
         res.redirect("/homes");
       }else{
-        res.render('store/home-details', {pageTitle: 'Homes Details page' , currentPage: 'Home' ,home: home ,isLoggedIn: req.isLoggedIn});
+        res.render('store/home-details', {pageTitle: 'Homes Details page' , currentPage: 'Home' ,home: home ,isLoggedIn: req.isLoggedIn ,user: req.session.user});
       }
     });
 
@@ -48,7 +48,7 @@ exports.getHomeDetails = (req ,res , next) =>{
 }
 
 exports.getBookings = (req ,res , next) =>{
-    Home.find((registeredHomes)=> res.render('store/bookings', { bookings : registeredHomes , pageTitle: 'Bookings page' , currentPage: 'bookings',isLoggedIn: req.isLoggedIn}));
+    Home.find((registeredHomes)=> res.render('store/bookings', { bookings : registeredHomes , pageTitle: 'Bookings page' , currentPage: 'bookings',isLoggedIn: req.isLoggedIn ,user: req.session.user}));
 }
 
 exports.getFavouriteList = (req, res, next) => {
@@ -60,7 +60,8 @@ exports.getFavouriteList = (req, res, next) => {
       favouritesHomes: favouriteHomes,
       pageTitle: "My Favourites",
       currentPage: "favourites",
-      isLoggedIn: req.isLoggedIn
+      isLoggedIn: req.isLoggedIn,
+      user: req.session.user
     });
   });
 };

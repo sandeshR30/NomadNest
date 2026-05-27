@@ -46,17 +46,18 @@ app.use((req , res , next)=>{
   next();
 })
 
+app.use(authRouter);
 app.use(storeRouter);
-app.use("/host",hostRouter);
+
 app.use("/host", (req ,res , next) => {
-  if (req.isLoggedIN){
+  if (req.isLoggedIn){
     next();
   }else{
     res.redirect("/login");
   }
 });
 
-app.use(authRouter);
+app.use("/host",hostRouter);
 
 app.use(errorController.error);
 

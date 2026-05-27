@@ -3,6 +3,7 @@ const User = require("../model/user")
 const bcrypt = require("bcryptjs");
 
 exports.getLogin = (req , res ,next) =>{
+<<<<<<< HEAD
   res.render("auth/login", 
     {
       pageTitle: 'Login' ,
@@ -19,10 +20,20 @@ exports.postLogin = async (req , res , next) =>{
   const user = await User.findOne({email})
 
   if(!user){
+=======
+  res.render("auth/login", {pageTitle: 'Login' , currentPage: 'login' , isLoggedIn: false, user: {}})
+}
+
+exports.postLogin = async (req , res , next) =>{
+  const {email, password} = req.body;
+  const user = await User.findOne({email});
+  if (!user) {
+>>>>>>> 954c0d6 (added the host and user functionality)
     return res.status(422).render("auth/login", {
       pageTitle: "Login",
       currentPage: "login",
       isLoggedIn: false,
+<<<<<<< HEAD
       errors: ["User doesnt exist"],
       oldInput:{email}
     });
@@ -45,7 +56,42 @@ exports.postLogin = async (req , res , next) =>{
   await req.session.save();
   //res.cookie("isLoggedIn" , true);
   res.redirect("/");
+=======
+      errors: ["User does not exist"],
+      oldInput: {email},
+      user: {},
+    });
+  }
+>>>>>>> 954c0d6 (added the host and user functionality)
 
+  const isMatch = await bcrypt.compare(password, user.password);
+  if (!isMatch) {
+    return res.status(422).render("auth/login", {
+      pageTitle: "Login",
+      currentPage: "login",
+      isLoggedIn: false,
+      errors: ["Invalid Password"],
+      oldInput: {email},
+      user: {},
+    });
+  }
+console.log(req.session);
+console.log(req.isLoggedIn);
+
+  req.session.isLoggedIn = true;
+  req.session.user = {
+    _id: user._id.toString(),
+    email: user.email,
+    firstName: user.firstName,
+    userType: user.userType
+  };
+
+  req.session.save(err => {
+    if (err) {
+      console.log(err);
+    }
+    res.redirect("/");
+  });
 }
 
 exports.postLogout = (req , res ,next) =>{
@@ -57,7 +103,7 @@ exports.postLogout = (req , res ,next) =>{
 }
 
 exports.getsignup = (req , res , next) =>{
-  res.render("auth/signup", {pageTitle: 'signup' , currentPage: 'signup' , isLoggedIn: false});
+  res.render("auth/signup", {pageTitle: 'signup' , currentPage: 'signup' , isLoggedIn: false , user: {}});
 }
 
 exports.postsignup = [ 
@@ -101,7 +147,7 @@ exports.postsignup = [
       return true;
     }),
 
-  check("role")
+  check("userType")
     .notEmpty()
     .withMessage('User type is required')
     .isIn(['user', 'host'])
@@ -118,7 +164,7 @@ exports.postsignup = [
     }),
   
   (req , res , next) =>{
-  const { firstName , lastName , email , password , confirmPassword , role , terms } = req.body;
+  const { firstName , lastName , email , password , confirmPassword , userType , terms } = req.body;
 
   const errors = validationResult(req);
   if(!errors.isEmpty()){
@@ -127,10 +173,12 @@ exports.postsignup = [
       currentPage: 'signup',
       isLoggedIn: false,
       errors: errors.array().map(err => err.msg),
-      oldInput: {firstName , lastName , email , password , role}
+      oldInput: {firstName , lastName , email , password , userType},
+      user: {}
     })
   }
 
+<<<<<<< HEAD
 
   bcrypt.hash(password , 12).then(hashedPassword=>{
     const user = new User({firstName , lastName , email , password: hashedPassword , role})
@@ -145,8 +193,25 @@ exports.postsignup = [
       isLoggedIn: false,
       errors: [err.message],
       oldInput: {firstName , lastName , email , password , role}
+=======
+    bcrypt.hash(password, 12)
+    .then(hashedPassword => {
+      const user = new User({firstName, lastName, email, password: hashedPassword, userType});
+      return user.save();
+>>>>>>> 954c0d6 (added the host and user functionality)
     })
-  })
+    .then(() => {
+      res.redirect("/login");
+    }).catch(err => {
+      return res.status(422).render("auth/signup", {
+        pageTitle: "Signup",
+        currentPage: "signup",
+        isLoggedIn: false,
+        errors: [err.message],
+        oldInput: {firstName, lastName, email, userType},
+        user: {},
+      });
+    });
 
   
 
