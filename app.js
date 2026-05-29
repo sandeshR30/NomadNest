@@ -7,6 +7,7 @@ const storeRouter = require('./routes/storeRouter.js');
 const hostRouter = require('./routes/hostRouter.js');
 const errorController = require('./controller/error.js');
 const authRouter = require('./routes/authRouter.js');
+const multer = require('multer');
 
 const DB_PATH = "mongodb+srv://root:root@crowdfunding.yufu7xn.mongodb.net/";  
 
@@ -24,6 +25,38 @@ const store = new mongoDBStore({
   collection: 'session',
 })
 
+const randomString = (length) => {
+  const characters = 'abcdefghijklmnopqrstuvwxyz';
+  let result = '';
+  for (let i = 0; i < length; i++) {
+    result += characters.charAt(Math.floor(Math.random() * characters.length));
+  }
+  return result;
+}
+
+const storage = multer.diskStorage(
+  {
+    destination: (req , file , cb ) =>{
+      cb(null , "uploads/");
+    },
+    filename: (req , file , cb)=>{
+      cb(null , randomString(10) + '-' + file.originalname);
+    }
+  }
+)
+
+const fileFilter = (req , file , cb) =>{
+  if (file.mimetype === 'image/png' || file.mimetype === 'image/jpeg' || file.mimetype === 'image/jpg' ){
+    cb(null , true)
+  }else {
+    cb(null , false)
+  }
+}
+
+/* const multerOptions = {
+  dest : "uploads/"
+} */
+
 
 app.use(express.static(path.join(rootdir ,'public')));
 
@@ -33,6 +66,7 @@ app.use((req, res , next)=>{
 });
 
 app.use(express.urlencoded());
+app.use(multer({storage: storage}).single('photo'));
 app.use(session({
   secret: "Information Technology",
   resave: false,

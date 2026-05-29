@@ -10,14 +10,20 @@ exports.getAddHome = (req, res , next)=>{
 exports.postAddHome = (req, res , next)=>{
   console.log(req.body);
 
-  const {houseName , price , location , rating , photoUrl ,description ,id } = req.body;
+  const {houseName , price , location , rating ,description ,id } = req.body;
+  console.log(req.file);
 
-  const home = new Home({ houseName , price , location , rating , photoUrl ,description  ,id});
+  if(!req.file){
+    return res.status(422).send("No image provided");
+  }
+
+  const photo = req.file.path;
+  const home = new Home({ houseName , price , location , rating , photo ,description  ,id});
   home.save().then(()=>{
     console.log('home saved successfully');
   });
 
- // registeredHomes.push({houseName: req.body.houseName , pricePerNight: req.body.pricePerNight ,location: req.body.location, rating: req.body.rating, photoUrl: req.body.photoUrl});
+ // registeredHomes.push({houseName: req.body.houseName , pricePerNight: req.body.pricePerNight ,location: req.body.location, rating: req.body.rating, photo: req.body.photo});
 
   res.render('host/home-added',  {pageTitle: 'Home Added Successfully', currentPage: 'AddHome complete',isLoggedIn: req.isLoggedIn ,user: req.session.user});
 }
@@ -56,15 +62,23 @@ exports.getEditHome = (req, res , next)=>{
 exports.postEditHome = (req, res , next)=>{
   console.log(req.body);
 
-  const { houseName , price , location , rating , photoUrl ,description, id } = req.body;
+  const { houseName , price , location , rating ,description, id } = req.body;
 
   Home.findById(id).then((home)=>{
     home.houseName = houseName;
     home.price = price;
     home.location = location;
     home.rating = rating;
-    home.photoUrl  = photoUrl;
     home.description = description;
+
+  if (req.file) {
+
+      home.photo =req.file.path;
+
+    }
+
+    console.log(home.photo);
+
     home.save().then(result=>{
     console.log('Home updated', result);
   }).catch(err =>{
@@ -80,7 +94,7 @@ exports.postEditHome = (req, res , next)=>{
 
   
 
- // registeredHomes.push({houseName: req.body.houseName , pricePerNight: req.body.pricePerNight ,location: req.body.location, rating: req.body.rating, photoUrl: req.body.photoUrl});
+ // registeredHomes.push({houseName: req.body.houseName , pricePerNight: req.body.pricePerNight ,location: req.body.location, rating: req.body.rating, photo: req.body.photo});
 
   
 };
