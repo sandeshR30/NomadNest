@@ -12,7 +12,11 @@ storeRouter.get("/home/:homeId" , homeController.getHomeDetails);
 storeRouter.get("/bookings" , homeController.getBookings);
 storeRouter.get("/favourites" , homeController.getFavouriteList);
 storeRouter.get("/homes" , homeController.getHomes);
+storeRouter.get("/book/:homeId", homeController.bookPage );
 
+
+
+storeRouter.post("/book/:homeId", homeController.book )
 storeRouter.post("/favourites" , homeController.postAddToFavourite);
 storeRouter.post("/favourites/delete/:homeId" , homeController.postRemovefromFavourite);
 

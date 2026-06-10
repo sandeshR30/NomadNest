@@ -63,6 +63,8 @@ const fileFilter = (req , file , cb) =>{
 app.use(express.static(path.join(rootdir ,'public')));
 app.use("/uploads",express.static(path.join(rootdir ,'uploads')));
 app.use("/host/uploads",express.static(path.join(rootdir ,'uploads')));
+app.use("/home/uploads",express.static(path.join(rootdir ,'uploads')));
+
 
 
 

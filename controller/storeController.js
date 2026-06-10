@@ -1,6 +1,7 @@
 //const Favourites = require('../model/favourite');
 const Home = require('../model/store');
-const User = require('../model/user')
+const User = require('../model/user');
+const Booking = require('../model/bookings');
 
 exports.getIndex = (req, res , next)=>{
   //console.log(req.url , req.method);
@@ -14,6 +15,45 @@ exports.getIndex = (req, res , next)=>{
   //console.log(registeredHomes);
  
 }
+
+exports.bookPage = async(req, res, next)=>{
+
+  const homeId = req.params.homeId;
+  console.log(homeId);
+
+  res.render("store/bookingPage",
+    {pageTitle: 'Booking Page' , 
+      currentPage: 'Booking', 
+      isLoggedIn: req.isLoggedIn, 
+      user: req.session.user,
+      HomeId : homeId,
+    });
+
+}
+
+
+
+exports.book = async(req, res, next)=>{
+
+  const { checkIn, checkOut } = req.body;
+
+  const homeId = req.params.homeId;
+  console.log(homeId, checkIn, checkOut);
+
+  try{
+
+    /* const bookedHomes = await Home.findById(homeId); */
+
+    const Bookings = new Booking({ home: homeId , checkIn: checkIn ,checkOut: checkOut});
+
+    await Bookings.save();
+
+  }catch(error){
+    console.log(error);
+  }
+
+  res.redirect("/")
+};
 
 exports.getHomes = (req, res , next)=>{
   //console.log(req.url , req.method);
@@ -48,8 +88,25 @@ exports.getHomeDetails = (req ,res , next) =>{
     /* Home.find((registeredHomes)=> res.render('store/home-details', { registeredHomes : registeredHomes , pageTitle: 'Homes Details page' , currentPage: 'Home' , homeId : homeId})); */
 }
 
-exports.getBookings = (req ,res , next) =>{
+/* exports.getBookings = (req ,res , next) =>{
     Home.find((registeredHomes)=> res.render('store/bookings', { bookings : registeredHomes , pageTitle: 'Bookings page' , currentPage: 'bookings',isLoggedIn: req.isLoggedIn ,user: req.session.user}));
+} */
+
+exports.getBookings = async (req , res , next)=>{
+  try{
+    const registeredHomes = await Home.find();
+
+     res.render('store/bookings', 
+      { bookings : registeredHomes , 
+        pageTitle: 'Bookings page' , 
+        currentPage: 'bookings',
+        isLoggedIn: req.isLoggedIn ,
+        user: req.session.user
+      });
+  }catch(err){
+    console.log(err);
+    next(err)
+  }
 }
 
 exports.getFavouriteList = async (req, res, next) => {

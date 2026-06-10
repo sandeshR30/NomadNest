@@ -1,33 +1,59 @@
 <%- include('../partials/head') %>
 </head>
-<body class="bg-gray-100 font-sans">
+<body class="bg-[#F8FAFC] font-sans">
 
 <%- include('../partials/nav') %>
 
-
-
 <main class="container mx-auto px-6 py-12">
-    <div class="max-w-lg mx-auto bg-white p-8 rounded-lg shadow-lg">
-        <h2 class="text-2xl font-bold text-gray-900 mb-6 text-center"><%= home.houseName %></h2>
-        <img src="<%= home.photo %>" alt="<%= home.houseName %>" class="w-full h-48 object-cover rounded-lg mb-6" />
-        
+
+    <div class="max-w-xl mx-auto bg-white p-8 rounded-xl shadow-lg border border-gray-100">
+
+        <!-- Title -->
+        <h2 class="text-2xl font-bold text-[#0F172A] mb-6 text-center">
+            <%= home.houseName %>
+        </h2>
+
+        <!-- Image -->
+        <img 
+            src="<%= home.photo %>" 
+            alt="<%= home.houseName %>" 
+            class="w-full h-56 object-cover rounded-lg mb-6 shadow-sm"
+        />
+
+        <!-- Details -->
         <div class="space-y-4">
-            <p class="text-gray-600">📍 <%= home.location %></p>
-            <p class="text-lg text-gray-800">Price: ₹ <%= home.price %> / night</p>
-            <p class="text-lg text-yellow-500">Rating: <%= home.rating %> ⭐</p>
+
+            <p class="text-gray-600">
+                📍 <%= home.location %>
+            </p>
+
+            <p class="text-lg font-semibold text-[#0F172A]">
+                Price: ₹ <%= home.price %> / night
+            </p>
+
+            <p class="text-lg text-yellow-500 font-medium">
+                ⭐ <%= home.rating %> rating
+            </p>
+
         </div>
 
-        <!-- Add to Favorites Button -->
-        <%- include('../partials/favourite') %>
-
+        <!-- Favorite Button -->
+        <div class="mt-6">
+            <%- include('../partials/favourite', { home: home }) %>
+        </div>
 
         <!-- Book Now Button -->
-        <form action="/bookings/checkout/<%= home._id %>" method="GET">
-            <button type="submit" class="w-full bg-red-500 text-white py-2 rounded-md hover:bg-red-600 transition duration-300 mt-4">
+        <form action="/bookings/checkout/<%= home._id %>" method="GET" class="mt-4">
+            <button 
+                type="submit" 
+                class="w-full bg-[#0F172A] text-white py-2.5 rounded-md hover:bg-[#1E293B] transition duration-300 font-semibold"
+            >
                 Book Now
             </button>
         </form>
+
     </div>
+
 </main>
 
 </body>
