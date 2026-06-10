@@ -1,96 +1,91 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Signup</title>
-  <script src="https://cdn.tailwindcss.com"></script>
+<%- include('../partials/head') %>
 </head>
-<body class="bg-gray-100">
 
-  <%- include('../partials/head') %>
+<body class="bg-[#F8FAFC] font-sans">
+
+  <%- include('../partials/nav') %>
 
   <div class="flex justify-center items-center min-h-screen">
-    <div class="bg-white p-8 rounded-lg shadow-md w-full max-w-md">
+    <div class="bg-white p-8 rounded-lg shadow-lg w-full max-w-md">
       
-      <h2 class="text-2xl font-bold mb-6 text-center text-red-500">
+      <h2 class="text-2xl font-bold mb-6 text-center text-[#0F172A]">
         Create Account
       </h2>
 
       <form action="/signup" method="POST" class="space-y-4">
 
-       <%- include('../partials/error') %>
+        <%- include('../partials/error') %>
+
         <!-- First Name -->
         <div>
-          <label class="block mb-1 font-medium">First Name</label>
+          <label class="block mb-1 font-medium text-gray-700">First Name</label>
           <input
             type="text"
             name="firstName"
             value="<%= typeof oldInput !== 'undefined' ? oldInput.firstName : '' %>"
             required
-            class="w-full border rounded px-3 py-2 focus:ring-2 focus:ring-red-400 outline-none"
+            class="w-full border border-gray-300 rounded px-3 py-2 focus:ring-2 focus:ring-[#0F172A] outline-none"
           />
         </div>
 
         <!-- Last Name -->
         <div>
-          <label class="block mb-1 font-medium">Last Name</label>
+          <label class="block mb-1 font-medium text-gray-700">Last Name</label>
           <input
             type="text"
-            value="<%= typeof oldInput !== 'undefined' ? oldInput.lastName : '' %>"
-
             name="lastName"
+            value="<%= typeof oldInput !== 'undefined' ? oldInput.lastName : '' %>"
             required
-            class="w-full border rounded px-3 py-2 focus:ring-2 focus:ring-red-400 outline-none"
+            class="w-full border border-gray-300 rounded px-3 py-2 focus:ring-2 focus:ring-[#0F172A] outline-none"
           />
         </div>
 
         <!-- Email -->
         <div>
-          <label class="block mb-1 font-medium">Email</label>
+          <label class="block mb-1 font-medium text-gray-700">Email</label>
           <input
             type="email"
             name="email"
             value="<%= typeof oldInput !== 'undefined' ? oldInput.email : '' %>"
             required
-            class="w-full border rounded px-3 py-2 focus:ring-2 focus:ring-red-400 outline-none"
+            class="w-full border border-gray-300 rounded px-3 py-2 focus:ring-2 focus:ring-[#0F172A] outline-none"
           />
         </div>
 
         <!-- Password -->
         <div>
-          <label class="block mb-1 font-medium">Password</label>
+          <label class="block mb-1 font-medium text-gray-700">Password</label>
           <input
             type="password"
             name="password"
             value="<%= typeof oldInput !== 'undefined' ? oldInput.password : '' %>"
             required
-            class="w-full border rounded px-3 py-2 focus:ring-2 focus:ring-red-400 outline-none"
+            class="w-full border border-gray-300 rounded px-3 py-2 focus:ring-2 focus:ring-[#0F172A] outline-none"
           />
         </div>
 
         <!-- Confirm Password -->
         <div>
-          <label class="block mb-1 font-medium">Confirm Password</label>
+          <label class="block mb-1 font-medium text-gray-700">Confirm Password</label>
           <input
             type="password"
             name="confirmPassword"
             required
-            class="w-full border rounded px-3 py-2 focus:ring-2 focus:ring-red-400 outline-none"
+            class="w-full border border-gray-300 rounded px-3 py-2 focus:ring-2 focus:ring-[#0F172A] outline-none"
           />
         </div>
 
         <!-- Role Dropdown -->
         <div>
-          <label class="block mb-1 font-medium">Register As</label>
+          <label class="block mb-1 font-medium text-gray-700">Register As</label>
           <select
-            name="userType"         
+            name="userType"
             required
-            class="w-full border rounded px-3 py-2 focus:ring-2 focus:ring-red-400 outline-none"
+            class="w-full border border-gray-300 rounded px-3 py-2 focus:ring-2 focus:ring-[#0F172A] outline-none"
           >
             <option value="">Select Role</option>
-            <option value="user" >User</option>
-            <option value="host" >Host</option>
+            <option value="user">User</option>
+            <option value="host">Host</option>
           </select>
         </div>
 
@@ -102,9 +97,9 @@
             required
             class="mr-2"
           />
-          <label class="text-sm">
+          <label class="text-sm text-gray-700">
             I agree to the 
-            <a href="#" class="text-red-500 hover:underline">
+            <a href="#" class="text-[#0F172A] hover:underline">
               Terms & Conditions
             </a>
           </label>
@@ -113,7 +108,7 @@
         <!-- Submit Button -->
         <button
           type="submit"
-          class="w-full bg-red-500 text-white py-2 rounded hover:bg-red-600 transition"
+          class="w-full bg-[#0F172A] text-white py-2 rounded hover:bg-[#1E293B] transition duration-300"
         >
           Signup
         </button>
@@ -121,9 +116,9 @@
       </form>
 
       <!-- Login redirect -->
-      <p class="mt-4 text-center text-sm">
+      <p class="mt-4 text-center text-sm text-gray-700">
         Already have an account?
-        <a href="/login" class="text-red-500 hover:underline">Login</a>
+        <a href="/login" class="text-[#0F172A] hover:underline">Login</a>
       </p>
 
     </div>

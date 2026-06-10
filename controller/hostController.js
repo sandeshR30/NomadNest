@@ -3,7 +3,7 @@ const { error } = require('./error');
 
 exports.getAddHome = (req, res , next)=>{
   //console.log(req.url , req.method);
-  res.render( 'host/edit-Home' ,  {pageTitle: 'Add Home to Airbnb' ,  currentPage: 'AddHome' , editing: false , isLoggedIn: req.isLoggedIn , user: req.session.user});
+  res.render( 'host/edit-Home' ,  {pageTitle: 'Add Home to NomadNest' ,  currentPage: 'AddHome' , editing: false , isLoggedIn: req.isLoggedIn , user: req.session.user});
 
 }
 

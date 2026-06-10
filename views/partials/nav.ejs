@@ -1,92 +1,62 @@
-<header class="bg-red-500 text-white p-4 shadow-md">
+<header class="bg-[#0F172A] text-white p-4 shadow-md">
   <nav class="container mx-auto flex justify-between items-center">
-    <ul class="flex space-x-4">
-      <li>
-        <a
-          href="/"
-          class="<%= currentPage === 'index' ? 'bg-red-400' : 'hover:bg-red-400' %> py-2 px-4 rounded transition duration-300"
-        >
-          airbnb
-        </a>
-      </li>
+  
+  <!-- LEFT SIDE -->
+  <ul class="flex space-x-4 items-center">
+    <li>
+      <a href="/" class="<%= currentPage === 'index' ? 'bg-[#1E293B]' : 'hover:bg-[#1E293B]' %> py-2 px-4 rounded transition duration-300">
+        NomadNest
+      </a>
+    </li>
 
-      <% if(isLoggedIn) { %>
-        <% if(user && user.userType === 'user') { %>
-      <li>
-        <a
-          href="/homes"
-          class="<%= currentPage === 'home' ? 'bg-red-400' : 'hover:bg-red-400' %> py-2 px-4 rounded transition duration-300"
-        >
-          Homes
-        </a>
-      </li>
-      <li>
-        <a
-          href="/favourites"
-          class="<%= currentPage === 'favourites' ? 'bg-red-400' : 'hover:bg-red-400' %> py-2 px-4 rounded transition duration-300"
-        >
-          Favourites
-        </a>
-      </li>
-      <li>
-        <a
-          href="/bookings"
-          class="<%= currentPage === 'bookings' ? 'bg-red-400' : 'hover:bg-red-400' %> py-2 px-4 rounded transition duration-300"
-        >
-          Bookings
-        </a>
-      </li>
+    <% if(isLoggedIn) { %>
+      <% if(user && user.userType === 'user') { %>
+
+        <li><a href="/homes" class="<%= currentPage === 'home' ? 'bg-[#1E293B]' : 'hover:bg-[#1E293B]' %> py-2 px-4 rounded">Homes</a></li>
+
+        <li><a href="/favourites" class="<%= currentPage === 'favourites' ? 'bg-[#1E293B]' : 'hover:bg-[#1E293B]' %> py-2 px-4 rounded">Favourites</a></li>
+
+        <li><a href="/bookings" class="<%= currentPage === 'bookings' ? 'bg-[#1E293B]' : 'hover:bg-[#1E293B]' %> py-2 px-4 rounded">Bookings</a></li>
 
       <% } else { %>
 
-      <li>
-        <a
-          href="/host/host-home-list"
-          class="<%= currentPage === 'host-homes' ? 'bg-red-400' : 'hover:bg-red-400' %> py-2 px-4 rounded transition duration-300"
-        >
-          Host Homes
-        </a>
-      </li>
-      <li>
-        <a
-          href="/host/add-home"
-          class="<%= currentPage === 'AddHome' ? 'bg-red-400' : 'hover:bg-red-400' %> py-2 px-4 rounded transition duration-300"
-        >
-          Add Home
-        </a>
-      </li>
+        <li><a href="/host/host-home-list" class="<%= currentPage === 'host-homes' ? 'bg-[#1E293B]' : 'hover:bg-[#1E293B]' %> py-2 px-4 rounded">Host Homes</a></li>
+
+        <li><a href="/host/add-home" class="<%= currentPage === 'AddHome' ? 'bg-[#1E293B]' : 'hover:bg-[#1E293B]' %> py-2 px-4 rounded">Add Home</a></li>
+
       <% } %>
-      <!-- Logout Button -->
+    <% } %>
+  </ul>
+
+  <!-- RIGHT SIDE -->
+  <ul class="flex space-x-4 items-center">
+    
+    <% if(isLoggedIn) { %>
       <li>
         <form action="/logout" method="POST">
           <button
             type="submit"
-            class="py-2 px-4 rounded hover:bg-red-400 transition duration-300"
+            class="py-2 px-4 rounded hover:bg-[#1E293B] transition duration-300"
           >
             Logout
           </button>
         </form>
       </li>
-      <% } %>
-
-      <% if(!isLoggedIn) { %>
+    <% } else { %>
       <li>
-        <a
-          href="/login"
-          class="py-2 px-4 rounded transition duration-300 hover:bg-red-400"
-        >
+        <a href="/login" class="py-2 px-4 rounded hover:bg-[#1E293B] transition duration-300">
           Login
         </a>
       </li>
+
       <li>
-        <a
-          href="/signup"
-          class="py-2 px-4 rounded transition duration-300 hover:bg-red-400"
-        >
+        <a href="/signup" class="py-2 px-4 rounded hover:bg-[#1E293B] transition duration-300">
           Signup
         </a>
       </li>
-      <% } %>
-    </ul>
-  </nav>
+    <% } %>
+
+  </ul>
+
+</nav>
 </header>

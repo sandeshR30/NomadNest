@@ -1,9 +1,7 @@
-<%- include('../partials/head')%>
-
-<script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+<%- include('../partials/head') %>
 </head>
 
-<body class="bg-gray-100 font-sans">
+<body class="bg-[#F8FAFC] font-sans">
 
   <%- include('../partials/nav') %>
   <%- include('../partials/error') %>
@@ -12,7 +10,7 @@
   <main class="container mx-auto px-6 py-12">
     <div class="max-w-lg mx-auto bg-white p-8 rounded-lg shadow-lg">
       
-      <h2 class="text-2xl font-bold text-gray-900 mb-6 text-center">
+      <h2 class="text-2xl font-bold text-[#0F172A] mb-6 text-center">
         Login to your account
       </h2>
 
@@ -29,8 +27,7 @@
             id="email"
             value="<%= typeof oldInput !== 'undefined' ? oldInput.email : '' %>"
             placeholder="Enter your email"
-            value="<%= typeof oldInput !== 'undefined' ? oldInput.email : '' %>"
-            class="mt-2 w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent"
+            class="mt-2 w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#0F172A] focus:border-transparent"
             required
           />
         </div>
@@ -45,7 +42,7 @@
             name="password"
             id="password"
             placeholder="Enter your password"
-            class="mt-2 w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent"
+            class="mt-2 w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#0F172A] focus:border-transparent"
             required
           />
         </div>
@@ -54,7 +51,7 @@
         <div>
           <button
             type="submit"
-            class="w-full bg-red-500 text-white py-2 rounded-md hover:bg-red-600 transition duration-300"
+            class="w-full bg-[#0F172A] text-white py-2 rounded-md hover:bg-[#1E293B] transition duration-300"
           >
             Login
           </button>
