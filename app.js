@@ -1,5 +1,7 @@
 const path = require('path');
 
+require("dotenv").config();
+
 const express = require('express');
 const session = require('express-session');
 const mongoDBStore = require('connect-mongodb-session')(session);
@@ -9,7 +11,7 @@ const errorController = require('./controller/error.js');
 const authRouter = require('./routes/authRouter.js');
 const multer = require('multer');
 
-const DB_PATH = "mongodb+srv://root:root@crowdfunding.yufu7xn.mongodb.net/";  
+const DB_PATH = process.env.DATABASE_URL;  
 
 
 const rootdir = require('./utils/pathUtils.js');
@@ -99,7 +101,7 @@ app.use("/host",hostRouter);
 
 app.use(errorController.error);
 
-const port = 3001 ;
+const port = process.env.PORT;
 
 /* mongoConnect(() =>{
   
