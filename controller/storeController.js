@@ -94,7 +94,9 @@ exports.getHomeDetails = (req ,res , next) =>{
 
 exports.getBookings = async (req , res , next)=>{
   try{
-    const registeredHomes = await Home.find();
+    const registeredHomes = await Booking.find().populate('home');
+
+    console.log(registeredHomes);
 
      res.render('store/bookings', 
       { bookings : registeredHomes , 

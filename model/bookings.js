@@ -1,5 +1,7 @@
 const mongoose = require('mongoose');
 
+const Home = require("../model/store");
+
 const bookingSchema = new mongoose.Schema({
     /* user: {
         type: mongoose.Schema.Types.ObjectId,
